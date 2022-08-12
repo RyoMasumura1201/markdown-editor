@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styles from "styles/app.module.scss";
 import { Textarea } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
+import "github-markdown-css/github-markdown.css";
 
 const App: React.FC = () => {
   const [note, setNote] = useState("");
@@ -24,7 +27,9 @@ const App: React.FC = () => {
             />
           </GridItem>
           <GridItem w="100%" h="100%">
-            {note}
+            <ReactMarkdown remarkPlugins={[gfm]} className="markdown-body">
+              {note}
+            </ReactMarkdown>
           </GridItem>
         </Grid>
       </main>
