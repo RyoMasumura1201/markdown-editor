@@ -8,9 +8,11 @@ import "github-markdown-css/github-markdown.css";
 
 const App: React.FC = () => {
   const [note, setNote] = useState("");
+  const [renderedNote, setRenderedNote] = useState("");
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let inputValue = e.target.value;
     setNote(inputValue);
+    setRenderedNote(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
   };
 
   return (
@@ -28,7 +30,7 @@ const App: React.FC = () => {
           </GridItem>
           <GridItem w="100%" h="100%">
             <ReactMarkdown remarkPlugins={[gfm]} className="markdown-body">
-              {note}
+              {renderedNote}
             </ReactMarkdown>
           </GridItem>
         </Grid>
