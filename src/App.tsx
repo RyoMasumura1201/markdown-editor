@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "styles/app.module.scss";
 import { Textarea } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
@@ -7,20 +6,20 @@ import gfm from "remark-gfm";
 import "github-markdown-css/github-markdown.css";
 
 const App: React.FC = () => {
-  const [note, setNote] = useState("");
-  const [renderedNote, setRenderedNote] = useState("");
+  const [content, setContent] = useState("");
+  const [renderedContent, setRenderedContent] = useState("");
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let inputValue = e.target.value;
-    setNote(inputValue);
+    setContent(inputValue);
     // 半角を2つ追加することでレンダー側を改行させる
-    setRenderedNote(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
+    setRenderedContent(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = async (e: React.KeyboardEvent) => {
     let charCode = e.key.toLowerCase();
     if ((e.ctrlKey || e.metaKey) && charCode === "s") {
       e.preventDefault();
-      alert("CTRL+S Pressed");
+      await window.FileHandle.saveFile(content);
     }
   };
 
@@ -33,13 +32,13 @@ const App: React.FC = () => {
             <Textarea
               width="100%"
               height="100%"
-              value={note}
+              value={content}
               onChange={handleInputChange}
             />
           </GridItem>
           <GridItem w="100%" h="100%">
             <ReactMarkdown remarkPlugins={[gfm]} className="markdown-body">
-              {renderedNote}
+              {renderedContent}
             </ReactMarkdown>
           </GridItem>
         </Grid>
