@@ -1,5 +1,5 @@
 export default interface FileHandle {
-  saveFile: (note: string) => Promise<any>;
+  saveFile: (note: string) => Promise<void>;
 }
 
 declare global {
