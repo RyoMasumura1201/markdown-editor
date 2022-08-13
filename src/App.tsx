@@ -16,8 +16,16 @@ const App: React.FC = () => {
     setRenderedNote(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    let charCode = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && charCode === "s") {
+      e.preventDefault();
+      alert("CTRL+S Pressed");
+    }
+  };
+
   return (
-    <div className="site-wrapper">
+    <div className="site-wrapper" onKeyDown={handleKeyDown}>
       <header></header>
       <main>
         <Grid templateColumns="repeat(2, 1fr)" gap={5} h="100vh">
