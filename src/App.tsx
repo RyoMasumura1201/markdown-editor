@@ -12,6 +12,7 @@ const App: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let inputValue = e.target.value;
     setNote(inputValue);
+    // 半角を2つ追加することでレンダー側を改行させる
     setRenderedNote(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
   };
 
