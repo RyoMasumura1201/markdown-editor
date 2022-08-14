@@ -93,15 +93,17 @@ async function openFile() {
   return null;
 }
 
-async function saveFile(_, content: string) {
+async function saveFile(_, content: string, filePath: string) {
   if (win) {
-    const path = dialog.showSaveDialogSync(win, {
-      buttonLabel: "保存",
-      filters: [{ name: "Text", extensions: ["md"] }],
-      properties: [
-        "createDirectory", // ディレクトリの作成を許可 (macOS)
-      ],
-    });
+    const path = filePath
+      ? filePath
+      : dialog.showSaveDialogSync(win, {
+          buttonLabel: "保存",
+          filters: [{ name: "Text", extensions: ["md"] }],
+          properties: [
+            "createDirectory", // ディレクトリの作成を許可 (macOS)
+          ],
+        });
 
     // キャンセルで閉じた場合
     if (path === undefined) {

@@ -31,11 +31,12 @@ const App: React.FC = () => {
     if ((e.ctrlKey || e.metaKey) && charCode === "s") {
       e.preventDefault();
       const { status, path, message } = await window.FileHandle.saveFile(
-        content
+        content,
+        filePath
       );
       if (status && path) {
         setFilePath(path);
-      } else {
+      } else if (message) {
         alert(message);
       }
     }
