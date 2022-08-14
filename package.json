@@ -16,17 +16,15 @@
   },
   "dependencies": {
     "github-markdown-css": "^5.1.0",
+    "preact": "^10.10.2",
     "react-markdown": "^8.0.3",
     "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
+    "@preact/preset-vite": "^2.3.0",
     "@vitejs/plugin-react": "^2.0.0",
     "electron": "^19.0.9",
     "electron-builder": "^23.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "rollup-plugin-visualizer": "^5.7.1",
     "typescript": "^4.7.4",
     "vite": "^3.0.2",

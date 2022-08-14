@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "preact/hooks";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import "github-markdown-css/github-markdown.css";
 
-const App: React.FC = () => {
+const App = () => {
   const [content, setContent] = useState("");
   const [renderedContent, setRenderedContent] = useState("");
   const [filePath, setFilePath] = useState("");
