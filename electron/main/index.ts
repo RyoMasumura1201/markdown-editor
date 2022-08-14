@@ -92,35 +92,38 @@ async function openFile() {
   // ファイル選択ダイアログで何も選択しなかった場合は、nullを返しておく
   return null;
 }
-app.whenReady().then(() => {
-  ipcMain.handle("save", async (event, content: string) => {
-    if (win) {
-      const path = dialog.showSaveDialogSync(win, {
-        buttonLabel: "保存",
-        filters: [{ name: "Text", extensions: ["md"] }],
-        properties: [
-          "createDirectory", // ディレクトリの作成を許可 (macOS)
-        ],
-      });
 
-      // キャンセルで閉じた場合
-      if (path === undefined) {
-        return { status: undefined };
-      }
+async function saveFile(_, content: string) {
+  if (win) {
+    const path = dialog.showSaveDialogSync(win, {
+      buttonLabel: "保存",
+      filters: [{ name: "Text", extensions: ["md"] }],
+      properties: [
+        "createDirectory", // ディレクトリの作成を許可 (macOS)
+      ],
+    });
 
-      // ファイルの内容を返却
-      try {
-        fs.writeFileSync(path, content);
-
-        return {
-          status: true,
-          path: path,
-        };
-      } catch (error) {
-        return { status: false, message: error.message };
-      }
+    // キャンセルで閉じた場合
+    if (path === undefined) {
+      return { status: undefined };
     }
-  });
+
+    // ファイルの内容を返却
+    try {
+      fs.writeFileSync(path, content);
+
+      return {
+        status: true,
+        path: path,
+      };
+    } catch (error) {
+      return { status: false, message: error.message };
+    }
+  }
+}
+
+app.whenReady().then(() => {
+  ipcMain.handle("save", saveFile);
   ipcMain.handle("open", openFile);
   createWindow;
 });
