@@ -1,10 +1,10 @@
 import { rmSync } from "fs";
 import path from "path";
 import { type Plugin, type UserConfig, defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import electron from "vite-plugin-electron";
 import pkg from "./package.json";
 import { visualizer } from "rollup-plugin-visualizer";
+import preact from "@preact/preset-vite";
 
 rmSync(path.join(__dirname, "dist"), { recursive: true, force: true }); // v14.14.0
 
@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(),
+    preact(),
     electron({
       main: {
         entry: "electron/main/index.ts",
