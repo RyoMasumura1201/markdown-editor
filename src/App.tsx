@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Button, Textarea } from "@chakra-ui/react";
-import { Grid, GridItem } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import "github-markdown-css/github-markdown.css";
@@ -55,22 +53,32 @@ const App: React.FC = () => {
       </head>
       <div className="site-wrapper" onKeyDown={handleKeyDown}>
         <main>
-          <Button onClick={handleOnClick}>open</Button>
-          <Grid templateColumns="repeat(2, 1fr)" gap={5} h="100vh">
-            <GridItem w="100%" h="100%">
-              <Textarea
-                width="100%"
-                height="100%"
-                value={content}
-                onChange={handleInputChange}
-              />
-            </GridItem>
-            <GridItem w="100%" h="100%">
-              <ReactMarkdown remarkPlugins={[gfm]} className="markdown-body">
-                {renderedContent}
-              </ReactMarkdown>
-            </GridItem>
-          </Grid>
+          <button
+            onClick={handleOnClick}
+            style={{ marginBottom: "5px", marginLeft: "5px" }}
+          >
+            open
+          </button>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              height: "100vh",
+            }}
+          >
+            <textarea
+              style={{ width: "100%", height: "100%", fontSize: "20px" }}
+              value={content}
+              onChange={handleInputChange}
+            />
+
+            <ReactMarkdown
+              remarkPlugins={[gfm]}
+              className="markdown-body render-area"
+            >
+              {renderedContent}
+            </ReactMarkdown>
+          </div>
         </main>
       </div>
     </>
