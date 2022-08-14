@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Textarea } from "@chakra-ui/react";
+import { Button, Textarea } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
@@ -15,6 +15,15 @@ const App: React.FC = () => {
     setRenderedContent(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
   };
 
+  const handleOnClick = async () => {
+    const result = await window.FileHandle.openFile();
+    if (result) {
+      const { filePath, textData } = result;
+      setContent(textData);
+      setRenderedContent(textData.replace(/\r\n|\r|\n/g, "  \n"));
+    }
+  };
+
   const handleKeyDown = async (e: React.KeyboardEvent) => {
     let charCode = e.key.toLowerCase();
     if ((e.ctrlKey || e.metaKey) && charCode === "s") {
@@ -25,8 +34,8 @@ const App: React.FC = () => {
 
   return (
     <div className="site-wrapper" onKeyDown={handleKeyDown}>
-      <header></header>
       <main>
+        <Button onClick={handleOnClick}>open</Button>
         <Grid templateColumns="repeat(2, 1fr)" gap={5} h="100vh">
           <GridItem w="100%" h="100%">
             <Textarea
