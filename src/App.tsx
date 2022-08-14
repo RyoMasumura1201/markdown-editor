@@ -9,11 +9,13 @@ const App: React.FC = () => {
   const [content, setContent] = useState("");
   const [renderedContent, setRenderedContent] = useState("");
   const [filePath, setFilePath] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let inputValue = e.target.value;
     setContent(inputValue);
     // 半角を2つ追加することでレンダー側を改行させる
     setRenderedContent(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
+    setIsSaved(false);
   };
 
   const handleOnClick = async () => {
@@ -23,6 +25,7 @@ const App: React.FC = () => {
       setFilePath(path);
       setContent(textData);
       setRenderedContent(textData.replace(/\r\n|\r|\n/g, "  \n"));
+      setIsSaved(false);
     }
   };
 
@@ -36,6 +39,7 @@ const App: React.FC = () => {
       );
       if (status && path) {
         setFilePath(path);
+        setIsSaved(true);
       } else if (message) {
         alert(message);
       }
@@ -45,7 +49,9 @@ const App: React.FC = () => {
   return (
     <>
       <head>
-        <title>Markdown Editor {filePath}</title>
+        <title>
+          Markdown Editor {filePath} {isSaved ? "(保存済み)" : ""}
+        </title>
       </head>
       <div className="site-wrapper" onKeyDown={handleKeyDown}>
         <main>
