@@ -50,7 +50,7 @@ const App: React.FC = () => {
     <>
       <head>
         <title>
-          Markdown Editor {filePath} {isSaved ? "(保存済み)" : ""}
+          Makda Editor {filePath} {isSaved ? "(保存済み)" : ""}
         </title>
       </head>
       <div className="site-wrapper" onKeyDown={handleKeyDown}>
