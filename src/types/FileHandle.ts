@@ -1,10 +1,17 @@
 export default interface FileHandle {
-  saveFile: (note: string) => Promise<void>;
+  saveFile: (note: string) => Promise<SaveFileResult>;
   openFile: () => Promise<OpenFileResult | null>;
 }
+
 type OpenFileResult = {
-  filePath: string;
+  path: string;
   textData: string;
+};
+
+type SaveFileResult = {
+  status: boolean;
+  path?: string;
+  message?: string;
 };
 
 declare global {

@@ -8,6 +8,7 @@ import "github-markdown-css/github-markdown.css";
 const App: React.FC = () => {
   const [content, setContent] = useState("");
   const [renderedContent, setRenderedContent] = useState("");
+  const [filePath, setFilePath] = useState("");
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let inputValue = e.target.value;
     setContent(inputValue);
@@ -18,7 +19,8 @@ const App: React.FC = () => {
   const handleOnClick = async () => {
     const result = await window.FileHandle.openFile();
     if (result) {
-      const { filePath, textData } = result;
+      const { path, textData } = result;
+      setFilePath(path);
       setContent(textData);
       setRenderedContent(textData.replace(/\r\n|\r|\n/g, "  \n"));
     }
@@ -28,31 +30,43 @@ const App: React.FC = () => {
     let charCode = e.key.toLowerCase();
     if ((e.ctrlKey || e.metaKey) && charCode === "s") {
       e.preventDefault();
-      await window.FileHandle.saveFile(content);
+      const { status, path, message } = await window.FileHandle.saveFile(
+        content
+      );
+      if (status && path) {
+        setFilePath(path);
+      } else {
+        alert(message);
+      }
     }
   };
 
   return (
-    <div className="site-wrapper" onKeyDown={handleKeyDown}>
-      <main>
-        <Button onClick={handleOnClick}>open</Button>
-        <Grid templateColumns="repeat(2, 1fr)" gap={5} h="100vh">
-          <GridItem w="100%" h="100%">
-            <Textarea
-              width="100%"
-              height="100%"
-              value={content}
-              onChange={handleInputChange}
-            />
-          </GridItem>
-          <GridItem w="100%" h="100%">
-            <ReactMarkdown remarkPlugins={[gfm]} className="markdown-body">
-              {renderedContent}
-            </ReactMarkdown>
-          </GridItem>
-        </Grid>
-      </main>
-    </div>
+    <>
+      <head>
+        <title>Markdown Editor {filePath}</title>
+      </head>
+      <div className="site-wrapper" onKeyDown={handleKeyDown}>
+        <main>
+          <Button onClick={handleOnClick}>open</Button>
+          <Grid templateColumns="repeat(2, 1fr)" gap={5} h="100vh">
+            <GridItem w="100%" h="100%">
+              <Textarea
+                width="100%"
+                height="100%"
+                value={content}
+                onChange={handleInputChange}
+              />
+            </GridItem>
+            <GridItem w="100%" h="100%">
+              <ReactMarkdown remarkPlugins={[gfm]} className="markdown-body">
+                {renderedContent}
+              </ReactMarkdown>
+            </GridItem>
+          </Grid>
+        </main>
+      </div>
+    </>
   );
 };
 

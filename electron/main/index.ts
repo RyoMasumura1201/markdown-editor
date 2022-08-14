@@ -78,13 +78,13 @@ async function openFile() {
 
     // [ファイル選択]ダイアログが閉じられた後の処理
     if (result.filePaths.length > 0) {
-      const filePath = result.filePaths[0];
+      const path = result.filePaths[0];
 
       // テキストファイルを読み込む
-      const textData = fs.readFileSync(filePath, "utf8");
+      const textData = fs.readFileSync(path, "utf8");
       // ファイルパスとテキストデータを返却
       return {
-        filePath,
+        path,
         textData,
       };
     }
