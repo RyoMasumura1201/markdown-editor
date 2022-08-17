@@ -1,3 +1,3 @@
 # markdown-editor
 
-markdown editor by electron and react
+markdown editor by Electron, Preact, and vite.
