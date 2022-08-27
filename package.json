@@ -18,11 +18,7 @@
     "node": ">=14.17.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "github-markdown-css": "^5.1.0",
-    "preact": "^10.10.2",
-    "react-markdown": "^8.0.3",
-    "remark-gfm": "^3.0.1"
+    "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.65",
@@ -33,6 +29,10 @@
     "@preact/preset-vite": "^2.3.0",
     "@vitejs/plugin-react": "^2.0.0",
     "electron": "^19.0.9",
+    "github-markdown-css": "^5.1.0",
+    "preact": "^10.10.6",
+    "react-markdown": "^8.0.3",
+    "remark-gfm": "^3.0.1",
     "rollup-plugin-visualizer": "^5.7.1",
     "typescript": "^4.7.4",
     "vite": "^3.0.2",
