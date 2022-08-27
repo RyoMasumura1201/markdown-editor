@@ -9,10 +9,7 @@
   "main": "dist/electron/main/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "build": "tsc && vite build && electron-builder"
   },
   "engines": {
     "node": ">=14.17.0"
