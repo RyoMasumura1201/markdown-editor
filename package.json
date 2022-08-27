@@ -21,14 +21,10 @@
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.65",
-    "@electron-forge/maker-deb": "^6.0.0-beta.65",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.65",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
-    "@electron-forge/maker-zip": "^6.0.0-beta.65",
     "@preact/preset-vite": "^2.3.0",
     "@vitejs/plugin-react": "^2.0.0",
     "electron": "^19.0.9",
+    "electron-builder": "^23.3.3",
     "github-markdown-css": "^5.1.0",
     "preact": "^10.10.6",
     "react-markdown": "^8.0.3",
@@ -41,32 +37,5 @@
   "env": {
     "VITE_DEV_SERVER_HOST": "127.0.0.1",
     "VITE_DEV_SERVER_PORT": 7777
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "markdown_editor"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
   }
 }
