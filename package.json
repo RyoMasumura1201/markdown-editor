@@ -14,9 +14,6 @@
   "engines": {
     "node": ">=14.17.0"
   },
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
-  },
   "devDependencies": {
     "@preact/preset-vite": "^2.3.0",
     "electron": "^19.0.9",
