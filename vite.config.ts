@@ -46,6 +46,10 @@ export default defineConfig({
     }),
     renderBuiltUrl(),
   ],
+  esbuild: {
+    // https://github.com/vitejs/vite/issues/8644
+    logOverride: { "this-is-undefined-in-esm": "silent" },
+  },
   server: {
     host: pkg.env.VITE_DEV_SERVER_HOST,
     port: pkg.env.VITE_DEV_SERVER_PORT,
