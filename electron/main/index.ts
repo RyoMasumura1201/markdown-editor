@@ -122,7 +122,7 @@ async function saveFile(_, content: string, filePath: string) {
 app.whenReady().then(() => {
   ipcMain.handle("save", saveFile);
   ipcMain.handle("open", openFile);
-  createWindow;
+  createWindow();
 });
 
 app.on("window-all-closed", () => {
