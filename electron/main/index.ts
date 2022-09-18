@@ -93,11 +93,7 @@ async function createWindow() {
     return { action: "deny" };
   });
 }
-// webContentsテスト
-async function test() {
-  console.log("test");
-  win?.webContents.send("menu", "hoge");
-}
+
 async function openFile() {
   if (win) {
     const result = await dialog.showOpenDialog(
@@ -137,9 +133,6 @@ async function saveFile(_, content: string, filePath: string) {
       : dialog.showSaveDialogSync(win, {
           buttonLabel: "保存",
           filters: [{ name: "Text", extensions: ["md"] }],
-          properties: [
-            "createDirectory", // ディレクトリの作成を許可 (macOS)
-          ],
         });
 
     // キャンセルで閉じた場合
@@ -189,7 +182,7 @@ app.on("activate", () => {
 });
 
 // new window example arg: new windows url
-ipcMain.handle("open-win", (event, arg) => {
+ipcMain.handle("open-win", (_, arg) => {
   const childWindow = new BrowserWindow({
     webPreferences: {
       preload,
