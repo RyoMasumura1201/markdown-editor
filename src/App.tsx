@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import "github-markdown-css/github-markdown.css";
@@ -14,17 +14,6 @@ const App = () => {
     // 半角を2つ追加することでレンダー側を改行させる
     setRenderedContent(inputValue.replace(/\r\n|\r|\n/g, "  \n"));
     setIsSaved(false);
-  };
-
-  const handleOnClick = async () => {
-    const result = await window.FileHandle.openFile();
-    if (result) {
-      const { path, textData } = result;
-      setFilePath(path);
-      setContent(textData);
-      setRenderedContent(textData.replace(/\r\n|\r|\n/g, "  \n"));
-      setIsSaved(false);
-    }
   };
 
   const handleKeyDown = async (e: React.KeyboardEvent) => {
@@ -43,7 +32,14 @@ const App = () => {
       }
     }
   };
-
+  useEffect(() => {
+    window.FileHandle.on("openFile", (_: any, fileData: any) => {
+      setFilePath(fileData.path);
+      setContent(fileData.textData);
+      setRenderedContent(fileData.textData.replace(/\r\n|\r|\n/g, "  \n"));
+      setIsSaved(false);
+    });
+  }, []);
   return (
     <>
       <head>
@@ -53,12 +49,6 @@ const App = () => {
       </head>
       <div className="site-wrapper" onKeyDown={handleKeyDown}>
         <main>
-          <button
-            onClick={handleOnClick}
-            style={{ marginBottom: "5px", marginLeft: "5px" }}
-          >
-            open
-          </button>
           <div
             style={{
               display: "grid",

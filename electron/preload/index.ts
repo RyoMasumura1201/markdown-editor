@@ -9,4 +9,6 @@ contextBridge.exposeInMainWorld("FileHandle", {
     const result = await ipcRenderer.invoke("open");
     return result;
   },
+  on: (channel, callback) =>
+    ipcRenderer.on(channel, (event, argv) => callback(event, argv)),
 });

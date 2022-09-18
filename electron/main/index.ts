@@ -1,4 +1,12 @@
-import { app, BrowserWindow, shell, ipcMain, dialog } from "electron";
+import {
+  app,
+  BrowserWindow,
+  shell,
+  ipcMain,
+  dialog,
+  Menu,
+  MenuItemConstructorOptions,
+} from "electron";
 import { release } from "os";
 import { join } from "path";
 import fs from "fs";
@@ -8,6 +16,8 @@ if (release().startsWith("6.1")) app.disableHardwareAcceleration();
 
 // Set application name for Windows 10+ notifications
 if (process.platform === "win32") app.setAppUserModelId(app.getName());
+
+const isMac = process.platform === "darwin";
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -30,6 +40,35 @@ const preload = join(__dirname, "../preload/index.js");
 const url = `http://${process.env["VITE_DEV_SERVER_HOST"]}:${process.env["VITE_DEV_SERVER_PORT"]}`;
 const indexHtml = join(ROOT_PATH.dist, "index.html");
 
+const template: MenuItemConstructorOptions[] = [];
+
+const macMenu: Electron.MenuItemConstructorOptions[] = [
+  {
+    label: app.name,
+    submenu: [
+      { type: "separator" },
+      { role: "hide" },
+      { role: "hideOthers" },
+      { type: "separator" },
+      { role: "quit" },
+    ],
+  },
+];
+
+if (isMac) {
+  // { role: 'appMenu' }
+  template.push(...macMenu);
+}
+
+template.push({
+  label: "File",
+  submenu: [
+    { label: "Open", click: () => openFile() },
+    isMac ? { role: "close" } : { role: "quit" },
+  ],
+});
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
 async function createWindow() {
   win = new BrowserWindow({
     title: "Main window",
@@ -53,6 +92,11 @@ async function createWindow() {
     if (url.startsWith("https:")) shell.openExternal(url);
     return { action: "deny" };
   });
+}
+// webContentsテスト
+async function test() {
+  console.log("test");
+  win?.webContents.send("menu", "hoge");
 }
 async function openFile() {
   if (win) {
@@ -78,14 +122,12 @@ async function openFile() {
       // テキストファイルを読み込む
       const textData = fs.readFileSync(path, "utf8");
       // ファイルパスとテキストデータを返却
-      return {
-        path,
-        textData,
-      };
+
+      const fileData = { path, textData };
+
+      win?.webContents.send("openFile", fileData);
     }
   }
-  // ファイル選択ダイアログで何も選択しなかった場合は、nullを返しておく
-  return null;
 }
 
 async function saveFile(_, content: string, filePath: string) {
@@ -121,7 +163,6 @@ async function saveFile(_, content: string, filePath: string) {
 
 app.whenReady().then(() => {
   ipcMain.handle("save", saveFile);
-  ipcMain.handle("open", openFile);
   createWindow();
 });
 

@@ -1,6 +1,7 @@
 export default interface FileHandle {
   saveFile: (content: string, filePath: string) => Promise<SaveFileResult>;
   openFile: () => Promise<OpenFileResult | null>;
+  on: any;
 }
 
 type OpenFileResult = {
