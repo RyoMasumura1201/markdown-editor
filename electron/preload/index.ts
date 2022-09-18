@@ -5,6 +5,6 @@ contextBridge.exposeInMainWorld("FileHandle", {
     const result = await ipcRenderer.invoke("save", content, filePath);
     return result;
   },
-  on: (channel, callback) =>
+  on: (channel: string, callback: (event, argv) => void) =>
     ipcRenderer.on(channel, (event, argv) => callback(event, argv)),
 });

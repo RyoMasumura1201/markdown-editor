@@ -1,4 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
+import { OpenFileResult } from "@/types/FileHandle";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import "github-markdown-css/github-markdown.css";
@@ -33,7 +34,7 @@ const App = () => {
     }
   };
   useEffect(() => {
-    window.FileHandle.on("openFile", (_: any, fileData: any) => {
+    window.FileHandle.on("openFile", (_: never, fileData: OpenFileResult) => {
       setFilePath(fileData.path);
       setContent(fileData.textData);
       setRenderedContent(fileData.textData.replace(/\r\n|\r|\n/g, "  \n"));
