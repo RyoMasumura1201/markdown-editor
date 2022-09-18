@@ -14,7 +14,6 @@ code {
 
 main {
   flex: 1;
-  margin-top: 5px;
 }
 
 .site-wrapper {
@@ -24,7 +23,8 @@ main {
 }
 
 .render-area {
-  width: 100%;
+  width: 50%;
   height: 100%;
-  margin-left: 10px;
+  padding-left: 10px;
+  word-break: keep-all;
 }

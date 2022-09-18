@@ -52,13 +52,12 @@ const App = () => {
         <main>
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              display: "flex",
               height: "100vh",
             }}
           >
             <textarea
-              style={{ width: "100%", height: "100%", fontSize: "20px" }}
+              style={{ width: "50%", height: "100%", fontSize: "20px" }}
               value={content}
               onChange={handleInputChange}
             />
