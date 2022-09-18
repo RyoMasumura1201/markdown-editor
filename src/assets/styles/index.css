@@ -25,6 +25,5 @@ main {
 .render-area {
   width: 50%;
   height: 100%;
-  padding-left: 10px;
-  word-break: keep-all;
+  padding: 5px;
 }
