@@ -57,7 +57,7 @@ const App = () => {
             }}
           >
             <textarea
-              style={{ width: "50%", height: "100%", fontSize: "20px" }}
+              style={{ width: "50%", height: "100%", fontSize: "14px" }}
               value={content}
               onChange={handleInputChange}
             />
